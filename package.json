@@ -1,5 +1,5 @@
 {
-  "name": "ezhttp",
+  "name": "@bluppie05/ezhttp",
   "author": "Bluppie05",
   "scripts": {
     "start": "node index.js",
