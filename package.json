@@ -11,7 +11,21 @@
     "integrate": "node integrate.js"
   },
   "dependencies": {
-    "pkg": "^4.5.0",
     "yargs": "^16.2.0"
-  }
+  },
+  "description": "A quick, portable, cross platform and EZ http server for development purposes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "pkg": "^4.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bluppie05/ezhttp.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bluppie05/ezhttp/issues"
+  },
+  "homepage": "https://github.com/Bluppie05/ezhttp#readme"
 }
