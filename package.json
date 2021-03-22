@@ -19,6 +19,9 @@
   "devDependencies": {
     "pkg": "^4.5.0"
   },
+  "bin": {
+    "ezhttp": "./index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bluppie05/ezhttp.git"
@@ -27,5 +30,6 @@
   "bugs": {
     "url": "https://github.com/Bluppie05/ezhttp/issues"
   },
-  "homepage": "https://github.com/Bluppie05/ezhttp#readme"
+  "homepage": "https://github.com/Bluppie05/ezhttp#readme",
+  "preferGlobal": true
 }
