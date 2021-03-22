@@ -10,6 +10,7 @@
     "build-freebsd": "pkg index.js -t node14-freebsd -o build/ezhttp -d"
   },
   "dependencies": {
-    "pkg": "^4.5.0"
+    "pkg": "^4.5.0",
+    "yargs": "^16.2.0"
   }
 }

@@ -3,6 +3,9 @@ var url = require('url');
 const fs = require('fs');
 const path = require('path')
 
+const yargs = require('yargs');
+const { rootCertificates } = require('tls');
+
 // mime list
 const mimes = {
 	"123": "application/vnd.lotus-1-2-3",
@@ -1173,32 +1176,76 @@ const mimes = {
 	"zmm": "application/vnd.handheld-entertainment+xml"
 }
 
-// server
-var server = http.createServer(function (req, res) {
-    var uri = url.parse(req.url, true);
+function start(port, root) {
+    // server
+    var server = http.createServer(function (req, res) {
+        var uri = url.parse(req.url, true);
 
-    console.log("\x1b[33m", `Request ${uri.path}`)
-    if(uri.path == "/../" || uri.path == "/..") {
-        res.writeHead(504)
-        return res.end("504: Unauthorized")
-    }
-    if(uri.path == "/") {
-        uri.path = "/index.html"
-    }
-
-    var extension = uri.path.split('.')[uri.path.split('.').length - 1];
-    fs.readFile(path.join(".", uri.path), function (err, data) {
-        //console.log(data)
-        if(err) {
-            console.log("\x1b[31m", err)
-            res.writeHead(500, {'Content-Type': mimes['html']});
-            return res.end(err.code);
+        console.log("\x1b[33m", `Request ${uri.path}`)
+        if(uri.path == "/../" || uri.path == "/..") {
+            res.writeHead(504)
+            return res.end("504: Unauthorized")
+        }
+        if(uri.path == "/") {
+            uri.path = "/index.html"
         }
 
-        res.writeHead(200, {'Content-Type': mimes[extension]});
-        res.end(data);
-    })
-})
+        var extension = uri.path.split('.')[uri.path.split('.').length - 1];
+        fs.readFile(path.join(root, uri.path), function (err, data) {
+            //console.log(data)
+            if(err) {
+                console.log("\x1b[31m", err)
+                res.writeHead(500, {'Content-Type': mimes['html']});
+                return res.end(err.code);
+            }
 
-console.log("\x1b[36m", "Server started on port 8080")
-server.listen(8080);
+            res.writeHead(200, {'Content-Type': mimes[extension]});
+            res.end(data);
+        })
+    })
+
+    console.log("\x1b[36m", `Server started on port ${port} with root at ${root}`)
+    server.listen(port);
+}
+
+// CLI handler
+const argv = yargs
+    .scriptName('ezhttp')
+    .version('v0.1')
+    .usage('$0 <cmd> [args]')
+    .option('port', {
+        alias: 'p',
+        description: 'The port to bind the http server to, defaults to 8080',
+        type: 'integer',
+    })
+    .option('root', {
+        alias: 'r',
+        description: 'The root location of the server, defaults to ./',
+        type: 'string',
+    })
+    .help()
+    .alias('help', 'h')
+    .argv;
+
+// argument handler
+if(argv.port && Number.isInteger(Number(argv.port))) {
+    var port = Number(argv.port)
+} else {
+    var port = 8080
+}
+
+if(argv.root) {
+    try {
+        // check if location exists
+        var stat = fs.statSync(argv.root)
+
+        var root = argv.root;
+    } catch(e) {
+        console.log("\x1b[31m", `${argv.root} not found, defaulting server root to ./`)
+        var root = ".";
+    }
+} else {
+    var root = ".";
+}
+
+start(port, root)
