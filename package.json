@@ -1,0 +1,15 @@
+{
+  "name": "ezhttp",
+  "author": "Bluppie05",
+  "scripts": {
+    "start": "node index.js",
+    "build-linux": "pkg index.js -t node14-linux -o build/ezhttp -d",
+    "build-windows": "pkg index.js -t node14-win -o build/ezhttp -d",
+    "build-macos": "pkg index.js -t node14-macos -o build/ezhttp -d",
+    "build-alpine": "pkg index.js -t node14-alpine -o build/ezhttp -d",
+    "build-freebsd": "pkg index.js -t node14-freebsd -o build/ezhttp -d"
+  },
+  "dependencies": {
+    "pkg": "^4.5.0"
+  }
+}
