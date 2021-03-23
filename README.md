@@ -7,7 +7,7 @@ Cool and all but how do I get started?
 ### Using NPM
 The quickest way to install EzHTTP is to install it using NPM, however, this does require you to have both nodejs and npm installed.
 
-`npm i @bluppie05/ezhttp`
+`npm i -g @bluppie05/ezhttp`
 
 that was it, you're already done!
 
